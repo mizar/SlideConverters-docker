@@ -1,6 +1,32 @@
-FROM alpine:3.16
+FROM alpine AS builder
 
-RUN apk add --no-cache ffmpeg poppler-utils
+RUN apk add --no-cache alpine-sdk bash cmake nasm yasm
+
+RUN \
+git clone --depth 1 https://github.com/madler/zlib.git ~/zlib && \
+git clone --depth 1 https://code.videolan.org/videolan/x264.git ~/x264 && \
+git clone --depth 1 https://git.ffmpeg.org/ffmpeg.git ~/ffmpeg && \
+cd ~/zlib && \
+./configure --static && \
+make clean && \
+make -j$(nproc) && \
+make install && \
+cd ~/x264 && \
+./configure --enable-static --disable-opencl && \
+make clean && \
+make -j$(nproc) && \
+make install && \
+cd ~/ffmpeg && \
+./configure --disable-shared --enable-static --pkg-config-flags=--static --extra-libs=-static --extra-cflags=--static --disable-doc --disable-debug --enable-small --enable-zlib --enable-libx264 --enable-gpl --enable-nonfree && \
+make clean && \
+make -j$(nproc) && \
+make install
+
+FROM alpine AS runner
+
+RUN apk add --no-cache poppler-utils
+
+COPY --from=builder /root/ffmpeg/ffmpeg /usr/local/bin/
 
 RUN \
 echo -e "#!/bin/sh\nfind *.pdf | sed 's/\.[^/\.]*$//' | xargs -P4 -i sh -c 'rm -f \"/tmp/{}/*.png\" && mkdir -p \"/tmp/{}\" && pdftoppm -progress -scale-to-x 1280 -scale-to-y 720 -png \"{}.pdf\" \"/tmp/{}/p\" && ffmpeg -y -pattern_type glob -r 1/2 -i \"/tmp/{}/p-*.png\" -c:v libx264 -r 30 -pix_fmt yuv420p \"{}.720p.mp4\" && rm -f \"/tmp/{}/*.png\"'" > /usr/local/bin/allpdf2vrclt && \
