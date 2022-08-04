@@ -2,6 +2,19 @@ FROM alpine:latest AS builder-base
 
 FROM builder-base AS runner
 
+RUN apk add --no-cache \
+font-noto \
+font-noto-arabic \
+font-noto-bengali \
+font-noto-cjk \
+font-noto-devanagari \
+font-noto-emoji \
+font-noto-math \
+font-noto-music \
+font-noto-symbols \
+ttf-liberation \
+poppler-data
+
 COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
 
 RUN apk add --no-cache poppler-utils
