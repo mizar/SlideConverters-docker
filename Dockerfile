@@ -42,6 +42,19 @@ make -j$(nproc)
 
 FROM builder-base AS runner
 
+RUN apk add --no-cache \
+font-noto \
+font-noto-arabic \
+font-noto-bengali \
+font-noto-cjk \
+font-noto-devanagari \
+font-noto-emoji \
+font-noto-math \
+font-noto-music \
+font-noto-symbols \
+ttf-liberation \
+poppler-data
+
 # builder-ffmpeg でビルドした ffmpeg のバイナリをコピー
 #COPY --from=builder-ffmpeg /root/ffmpeg/ffmpeg /usr/local/bin/
 
