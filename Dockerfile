@@ -1,4 +1,4 @@
-FROM alpine:3.16.1 AS builder-base
+FROM alpine:3.16.2 AS builder-base
 
 FROM builder-base as builder-poppler
 
