@@ -43,7 +43,8 @@ FROM builder-base AS runner
 # builder-ffmpeg でビルドした ffmpeg のバイナリをコピー
 COPY --from=builder-ffmpeg /root/ffmpeg/ffmpeg /usr/local/bin/
 
-# ハードウェア非依存の高い各種ライブラリ込み込みの static-ffmpeg ビルド https://github.com/wader/static-ffmpeg も存在するけど、その分ファイルサイズは大きい
+# スタティックリンク可能な各種ライブラリ込み込みの static-ffmpeg ビルド https://github.com/wader/static-ffmpeg も存在するが、その分ファイルサイズは大きい
+#COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
 #COPY --from=mwader/static-ffmpeg:5.1 /ffmpeg /usr/local/bin/
 
 # builder-poppler でビルドした pdftoppm のバイナリをコピー
