@@ -8,8 +8,8 @@ FROM builder-base as builder-poppler
 
 RUN apk add --no-cache \
 alpine-sdk cmake poppler-data \
-brotli-dev bzip2-dev expat-dev fontconfig-dev freetype-dev lcms2-dev libjpeg-turbo-dev libpng-dev libwebp-dev openjpeg-dev tiff-dev zlib-dev zstd-dev \
-brotli-static bzip2-static expat-static fontconfig-static freetype-static libjpeg-turbo-static libpng-static libwebp-static zlib-static zstd-static
+brotli-dev bzip2-dev expat-dev fontconfig-dev freetype-dev lcms2-dev libjpeg-turbo-dev libpng-dev libwebp-dev openjpeg-dev tiff-dev xz-dev zlib-dev zstd-dev \
+brotli-static bzip2-static expat-static fontconfig-static freetype-static libjpeg-turbo-static libpng-static libwebp-static xz-static zlib-static
 
 RUN git clone --depth 1 https://anongit.freedesktop.org/git/poppler/poppler.git -b master ~/poppler
 #RUN git clone --depth 1 https://anongit.freedesktop.org/git/poppler/poppler.git -b poppler-22.11.0 ~/poppler
