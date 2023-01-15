@@ -1,6 +1,6 @@
 # SlideConverters for VRC-LT/UnaSlides 
 
-[VRC-LT](https://vrc-lt.org/)会システム/[UnaSlides](https://booth.pm/ja/items/4141632) 向けのスライドpdf→mp4動画変換用Dockerfileです。
+[VRC-LT](https://vrc-lt.org/)会システム/[UnaSlides](https://booth.pm/ja/items/4141632) 向けのスライドpdf→動画変換用Dockerfileです。
 
 - [VRC-LT](https://vrc-lt.org/)会システム向けには スライド1ページあたり、2秒間の静止画像として動画への変換を行います。
 - [UnaSlides](https://booth.pm/ja/items/4141632)向けには スライド1ページあたり、1秒間の静止画像として動画への変換を行います。
