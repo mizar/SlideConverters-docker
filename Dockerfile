@@ -19,7 +19,7 @@ COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
 
 RUN apk add --no-cache poppler-utils
 
-# ja向けフォント指定
+# japanese fonts config
 RUN \
 mkdir -p ~/.config/fontconfig/ &&\
 echo -e "<?xml version='1.0'?>\n\
@@ -33,7 +33,7 @@ echo -e "<?xml version='1.0'?>\n\
 </fontconfig>" > ~/.config/fontconfig/fonts.conf &&\
 fc-cache -f
 
-# シェルスクリプト群の生成
+# generate shellscripts
 RUN \
 echo -e "#!/bin/sh\nYPX=720; if expr \"\$1\" : '\([1-9][0-9]\|[1-9][0-9][0-9]\+\)\$' > /dev/null; then YPX=\$(expr \\( \$1 + 9 \\) / 18 \\* 18 ); fi; find *.pdf | sed 's/\\.[^/\\.]*\$//' | xargs -P4 -i sh -c \"rm -f \\\"/tmp/{}/\${YPX}p-*.png\\\" && mkdir -p \\\"/tmp/{}\\\" && pdftoppm -progress -png -scale-to-x -1 -scale-to-y \$YPX \\\"{}.pdf\\\" \\\"/tmp/{}/\${YPX}p\\\" && ffmpeg -y -pattern_type glob -r 1/2 -i \\\"/tmp/{}/\${YPX}p-*.png\\\" -vf \\\"crop=min(ih*16/9\\,iw):ih,scale=-2:\${YPX}:flags=lanczos,pad=x=-2:aspect=16/9\\\" -c:v libx264 -r 6 -pix_fmt yuv420p -bf 0 \\\"{}.\${YPX}p.vrclt.mp4\\\" && rm -f \\\"/tmp/{}/\${YPX}p-*.png\\\"\"" > /usr/local/bin/allpdf2vrclt && \
 echo -e "#!/bin/sh\nYPX=720; if expr \"\$1\" : '\([1-9][0-9]\|[1-9][0-9][0-9]\+\)\$' > /dev/null; then YPX=\$(expr \\( \$1 + 9 \\) / 18 \\* 18 ); fi; find *.pdf | sed 's/\\.[^/\\.]*\$//' | xargs -P4 -i sh -c \"rm -f \\\"/tmp/{}/\${YPX}p-*.png\\\" && mkdir -p \\\"/tmp/{}\\\" && pdftoppm -progress -png -scale-to-x -1 -scale-to-y \$YPX \\\"{}.pdf\\\" \\\"/tmp/{}/\${YPX}p\\\" && ffmpeg -y -pattern_type glob -r 1 -i \\\"/tmp/{}/\${YPX}p-*.png\\\" -vf \\\"crop=min(ih*16/9\\,iw):ih,scale=-2:\${YPX}:flags=lanczos,pad=x=-2:aspect=16/9\\\" -c:v libx264 -r 6 -pix_fmt yuv420p -bf 0 \\\"{}.\${YPX}p.unaslides.mp4\\\" && rm -f \\\"/tmp/{}/\${YPX}p-*.png\\\"\"" > /usr/local/bin/allpdf2unaslides && \
