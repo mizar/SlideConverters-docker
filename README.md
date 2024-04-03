@@ -11,7 +11,6 @@
 
 ```
 docker pull mizarjp/slideconverters:latest
-docker pull mizarjp/slideconverters:extfonts
 ```
 
 - pdfファイルをmp4に変換
@@ -20,9 +19,7 @@ docker pull mizarjp/slideconverters:extfonts
 
 ```
 docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconverters:latest pdf2vrclt ${fileBasenameNoExtension}
-docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconverters:extfonts pdf2vrclt ${fileBasenameNoExtension}
 docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconverters:latest pdf2unaslides ${fileBasenameNoExtension}
-docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconverters:extfonts pdf2unaslides ${fileBasenameNoExtension}
 ```
 
 `:extfonts` イメージはpdfファイルに埋め込みされていないフォントグリフを補完するためのフォントファイルを幾つか追加しています。
@@ -32,7 +29,5 @@ docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconvert
 
 ```
 docker run -t --rm -v ${PWD}:/opt/work mizarjp/slideconverters:latest allpdf2vrclt
-docker run -t --rm -v ${PWD}:/opt/work mizarjp/slideconverters:extfonts allpdf2vrclt
 docker run -t --rm -v ${PWD}:/opt/work mizarjp/slideconverters:latest allpdf2unaslides
-docker run -t --rm -v ${PWD}:/opt/work mizarjp/slideconverters:extfonts allpdf2unaslides
 ```
