@@ -22,8 +22,6 @@ docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconvert
 docker run -t --rm -v ${fileDirname}:/opt/work -w /opt/work mizarjp/slideconverters:latest pdf2unaslides ${fileBasenameNoExtension}
 ```
 
-`:extfonts` イメージはpdfファイルに埋め込みされていないフォントグリフを補完するためのフォントファイルを幾つか追加しています。
-
 - カレントディレクトリの全てのpdfをmp4に変換
     - `${PWD}` : カレントディレクトリ名に置き換える
 
