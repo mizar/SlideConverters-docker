@@ -13,11 +13,10 @@ font-noto-math \
 font-noto-music \
 font-noto-symbols \
 ttf-liberation \
-poppler-data
+poppler-data \
+poppler-utils
 
-COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
-
-RUN apk add --no-cache poppler-utils
+COPY --from=mwader/static-ffmpeg:latest /ffmpeg /ffprobe /usr/local/bin/
 
 # japanese fonts config
 RUN \
