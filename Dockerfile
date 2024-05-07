@@ -4,16 +4,15 @@ FROM builder-base AS runner
 
 RUN apk upgrade --no-cache -U && \
 apk add --no-cache -U \
+font-liberation \
 font-noto \
-font-noto-arabic \
-font-noto-bengali \
 font-noto-cjk \
-font-noto-devanagari \
+font-noto-cjk-extra \
 font-noto-emoji \
+font-noto-extra \
 font-noto-math \
 font-noto-music \
 font-noto-symbols \
-ttf-liberation \
 poppler-data \
 poppler-utils
 
