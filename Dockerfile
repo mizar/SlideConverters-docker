@@ -2,7 +2,8 @@ FROM alpine:latest AS builder-base
 
 FROM builder-base AS runner
 
-RUN apk add --no-cache \
+RUN apk upgrade --no-cache -U && \
+apk add --no-cache -U \
 font-noto \
 font-noto-arabic \
 font-noto-bengali \
